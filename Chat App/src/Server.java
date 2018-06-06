@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Server extends Thread {
 
-	private int port;
+	private int port = 8979;
 
 	// Constructor
 	public Server(int port) {
@@ -15,6 +15,10 @@ public class Server extends Thread {
 
 	// Array List to hold online users
 	ArrayList<ServerHelper> connectionList = new ArrayList<>();
+
+	public List<ServerHelper> getConnectionList() {
+		return connectionList;
+	}
 
 	public void run() {
 
@@ -31,19 +35,10 @@ public class Server extends Thread {
 				System.out.println("This is the connection list: " + connectionList);
 				helper.start();
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	public List<ServerHelper> getConnectionList(){
-		return connectionList;
-		
-		//TODO: remove connection
-	}
-	
-	
-
 }

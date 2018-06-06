@@ -8,12 +8,19 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 
-public class ChatAppWindow extends JPanel{
+public class OnlineUsers extends JPanel{
 
 	private JFrame frame;
-	private JTextField textField;
 	private JList<String> onlineList = new JList<>();
+	private static ChatUser user;
+	
 
+	public OnlineUsers(ChatUser user){
+		this.user = user;
+		initialize();
+	}
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -23,7 +30,7 @@ public class ChatAppWindow extends JPanel{
 			
 			public void run() {
 				try {
-					ChatAppWindow window = new ChatAppWindow();
+					OnlineUsers window = new OnlineUsers(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,9 +42,7 @@ public class ChatAppWindow extends JPanel{
 	/**
 	 * Create the application.
 	 */
-	public ChatAppWindow() {
-		initialize();
-	}
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -48,23 +53,15 @@ public class ChatAppWindow extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(142, 205, 302, 67);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
 		
 		JList onlineUsers = new JList();
-		onlineUsers.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		onlineUsers.setBounds(6, 276, 135, -272);
+		onlineUsers.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		frame.getContentPane().add(onlineUsers);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(6, 6, 135, 266);
-		frame.getContentPane().add(scrollPane);
-		
 		JList list = new JList();
-		list.setBackground(new Color(204, 255, 255));
-		scrollPane.setViewportView(list);
+		list.setBackground(new Color(153, 255, 255));
+		list.setBounds(212, 142, 1, 1);
+		frame.getContentPane().add(list);
 	}
 }
