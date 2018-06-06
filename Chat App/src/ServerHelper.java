@@ -8,14 +8,18 @@ import java.net.Socket;
 
 public class ServerHelper extends Thread {
 
-	private final Socket userSocket;
+	private Socket userSocket;
 	private String login = null;
-	
-	
-	public ServerHelper(Socket userSocket){
+	private Server server;
+
+	// Constructor
+	public ServerHelper(Socket userSocket, Server server) {
 		this.userSocket = userSocket;
+		this.server = server;
+
 	}
-	public void run(){
+
+	public void run() {
 		try {
 			socketConnection();
 		} catch (IOException e) {
@@ -24,33 +28,36 @@ public class ServerHelper extends Thread {
 			e.printStackTrace();
 		}
 	}
+
 	
 	
+	
+	// Reads in user input
 	private void socketConnection() throws IOException, InterruptedException {
-		
+
 		InputStream inputStream = userSocket.getInputStream();
 		OutputStream outputStream = userSocket.getOutputStream();
-		
-		//To read in line by line
-		BufferedReader read = new BufferedReader(new InputStreamReader(inputStream));{
+
+		// To read in line by line
+		BufferedReader read = new BufferedReader(new InputStreamReader(inputStream));
+		{
 			String readLine;
-			while ((readLine = read.readLine()) != null){
-			
-				String output = "You typed: " + readLine + "\n";	
-			if ("quit".equalsIgnoreCase(readLine)){
-				break;
+			while ((readLine = read.readLine()) != null) {
+
+				String output = "You typed: " + readLine + "\n";
+				if ("quit".equalsIgnoreCase(readLine)) {
+					break;
+				}
+				// String output = "You typed: " + readLine + "\n";
+				outputStream.write(output.getBytes());
 			}
-		//	String output = "You typed: " + readLine + "\n";
-			outputStream.write(output.getBytes());
+			userSocket.close();
 		}
-		userSocket.close();
-		
 	}
 
+	private String getLoginInfo(){
+		return login;
+	}
+	
+	
 }
-
-	
-}
-	
-	
-	

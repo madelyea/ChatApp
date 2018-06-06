@@ -83,6 +83,8 @@ public class LoginWindow {
 					String usr = username.getText();
 					String psw = password.getText();
 					user.userLogin(usr, psw);
+				//	Server server = new Server();
+				//	server.connectionList.add(usr);
 					
 					frame.dispose();
 					
