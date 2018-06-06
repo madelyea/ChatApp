@@ -9,6 +9,8 @@ import java.net.Socket;
 public class ServerHelper extends Thread {
 
 	private final Socket userSocket;
+	private String login = null;
+	
 	
 	public ServerHelper(Socket userSocket){
 		this.userSocket = userSocket;
@@ -46,5 +48,9 @@ public class ServerHelper extends Thread {
 	}
 
 }
+
 	
 }
+	
+	
+	
