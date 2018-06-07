@@ -33,7 +33,7 @@ public class Server extends Thread {
 				ServerHelper helper = new ServerHelper(userSocket, null);
 				connectionList.add(helper);
 				System.out.println("This is the connection list: " + connectionList);
-				helper.start();
+				helper.run();
 			}
 
 		} catch (IOException e) {

@@ -4,8 +4,8 @@ import java.io.*;
 
 public class ChatUser {
 	String login;
-	int port = 8979;
-	Server server = new Server(port);
+	private final static int port = 8979;
+//	Server server = new Server(port);
 	private String serverName;
 	private int serverPort;
 	private BufferedReader readIn;
@@ -19,6 +19,21 @@ public class ChatUser {
 
 	}
 
+	public static void main(String [] args) throws IOException{
+	ChatUser user = new ChatUser("localhost", 8979);	
+		if (!user.connect()){
+			System.err.println("Could not connect");
+		}
+			else
+				System.out.println("Connected");
+				user.userLogin("Admin", "123");
+				
+		}
+	
+	
+	
+	
+	
 	public void message(String receiver, String message) throws IOException {
 		String sendMessage = "message" + receiver + " " + message + "\n";
 		outputStream.write(sendMessage.getBytes());
@@ -26,11 +41,16 @@ public class ChatUser {
 
 	// Reads in login information
 	public boolean userLogin(String username, String password) throws IOException{
-		String login = "login" + " " + username + " " + password + "\n";
+		System.out.println("Attempting login");
+		String login = "login" + " " + username + " " + password;
         outputStream.write(login.getBytes());
+        System.out.println("Wrote to outputstream");
         
+        return true;
+  /*      System.out.println(this.outputStream);
         //Read in server's response
         String success = readIn.readLine();
+        System.out.println("inputstream");
         System.out.println("Response Line:" + success);
         
         if("success".equals(success)){
@@ -39,7 +59,7 @@ public class ChatUser {
         }
         else
         	return false;
-	}
+	 */}
 
 	
 /*	public void readMessage(){
@@ -58,6 +78,7 @@ public class ChatUser {
 			this.socket = new Socket(serverName, serverPort);
 			System.out.println("Client port is " + socket.getLocalPort());
 			this.outputStream = socket.getOutputStream();
+			System.out.println(this.outputStream);
 			this.serverIn = socket.getInputStream();
 			this.readIn = new BufferedReader(new InputStreamReader(serverIn));
 			return true;

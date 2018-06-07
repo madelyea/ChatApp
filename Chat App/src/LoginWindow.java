@@ -22,7 +22,7 @@ public class LoginWindow {
 
 	private JFrame frame;
 	private JTextField username;
-	private final Action action = new SwingAction();
+	// private final Action action = new SwingAction();
 	private JTextField password;
 	private String userN;
 	String serverName;
@@ -44,6 +44,7 @@ public class LoginWindow {
 			}
 		});
 	}
+
 	/**
 	 * Create the application.
 	 */
@@ -55,13 +56,11 @@ public class LoginWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		//Create an instance of ChatUser
+
+		// Create an instance of ChatUser
 		this.user = new ChatUser("localhost", 8979);
-        user.connect();
-        
-        
-        
+		user.connect();
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,47 +85,45 @@ public class LoginWindow {
 
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
-			
-			
-		public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {
+				login();
+			}
+
+			private void login() {
 				String usr = username.getText();
 				String psw = password.getText();
-				
-				
+
+				System.out.println(usr + " " + psw);
 				if (usr == null || psw == null) {
 					JOptionPane.showMessageDialog(null, "Please re-enter your username and password");
 				}
-				
-				//:TODO changeto if(match found in database)
+
+				// :TODO changeto if(match found in database)
 				try {
 					if (user.userLogin(usr, psw)) {
-						
-						// Close login window and open chat window	
-						
+
+						// Close login window and open chat window
+
 						JOptionPane.showMessageDialog(null, "Login Successful!");
 						frame.dispose();
-					
+
 						OnlineUsers onlineUsersWindow = new OnlineUsers(user);
 						JFrame frame = new JFrame("User List");
-		                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		                frame.setSize(400, 600);
+						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						frame.setSize(400, 600);
 
-		                frame.getContentPane().add(onlineUsersWindow, BorderLayout.CENTER);
-		                frame.setVisible(true);
+						frame.getContentPane().add(onlineUsersWindow, BorderLayout.CENTER);
+						frame.setVisible(true);
 
-		      
-						
-					}
+					} else
+						JOptionPane.showMessageDialog(null, "Incorrect Login");
 				} catch (HeadlessException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
 		});
-		
-		
-		
+
 		loginButton.setForeground(new Color(102, 0, 153));
 		loginButton.setBackground(new Color(153, 51, 204));
 		loginButton.setBounds(157, 137, 117, 29);
@@ -136,17 +133,20 @@ public class LoginWindow {
 		password.setBounds(230, 99, 130, 26);
 		frame.getContentPane().add(password);
 		password.setColumns(10);
-	}
 
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
+		// Quit Button
+		JButton quitButton = new JButton("Quit");
+		quitButton.setBounds(327, 229, 117, 29);
+		frame.getContentPane().add(quitButton);
 
-		public void actionPerformed(ActionEvent e) {
-		}
-		
-		
+		quitButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+
+		});
+
 	}
 }
